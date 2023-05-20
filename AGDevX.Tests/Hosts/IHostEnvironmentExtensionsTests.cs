@@ -1,7 +1,4 @@
-﻿using System;
-using AGDevX.Assemblies;
-using AGDevX.Exceptions;
-using System.Reflection;
+﻿using AGDevX.Exceptions;
 using AGDevX.Hosts;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
@@ -14,8 +11,8 @@ public class IHostEnvironmentExtensionsTests
     {
         ApplicationName = "AGDevXTests",
         EnvironmentName = "Prod",
-        ContentRootPath = "C:\\",
-        ContentRootFileProvider = new PhysicalFileProvider("C:\\")
+        ContentRootPath = @"C:\",
+        ContentRootFileProvider = new PhysicalFileProvider(@"C:\")
     };
 
     public class When_calling_IsOneOf

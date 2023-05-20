@@ -2,7 +2,7 @@
 using AGDevX.Exceptions;
 using Xunit;
 
-namespace AGDevX.Database.Tests.Exceptions;
+namespace AGDevX.Tests.Exceptions;
 
 public sealed class ExtensionMethodParameterNullExceptionTests
 {

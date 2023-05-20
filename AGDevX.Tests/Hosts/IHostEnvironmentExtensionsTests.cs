@@ -27,7 +27,7 @@ public class IHostEnvironmentExtensionsTests
             var hostEnvironment = _prodHostEnvironment;
             string[]? environments = null;
 
-            //-- Act && Assert
+            //-- Act & Assert
             Assert.Throws<ExtensionMethodParameterNullException>(() => hostEnvironment.IsOneOf(environments));
         }
 

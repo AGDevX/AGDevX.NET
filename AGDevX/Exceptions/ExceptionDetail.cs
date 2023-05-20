@@ -62,7 +62,7 @@ public static class ExceptionDetailExtensions
                     AssemblyName = sfm.GetMethod()?.DeclaringType?.Assembly?.FullName,
                     AssemblyFile = sfm.GetMethod()?.DeclaringType?.Assembly?.Location,
                     CodeFile = sfm.GetFileName(),
-                }).Where(sf => !filterStackFrames || filterStackFrames && !assemblyPrefixes.Any() || AssemblyUtility.AssemblyNameStartsWithAnyPrefix(sf.AssemblyName, assemblyPrefixes))
+                }).Where(sf => !filterStackFrames || (filterStackFrames && !assemblyPrefixes.Any()) || AssemblyUtility.AssemblyNameStartsWithAnyPrefix(sf.AssemblyName, assemblyPrefixes))
                 : null
         };
 
@@ -105,7 +105,7 @@ public static class ExceptionDetailExtensions
                     AssemblyName = sfm.GetMethod()?.DeclaringType?.Assembly?.FullName,
                     AssemblyFile = sfm.GetMethod()?.DeclaringType?.Assembly?.Location,
                     CodeFile = sfm.GetFileName(),
-                }).Where(sf => !filterStackFrames || filterStackFrames && !assemblyPrefixes.Any() || AssemblyUtility.AssemblyNameStartsWithAnyPrefix(sf.AssemblyName, assemblyPrefixes))
+                }).Where(sf => !filterStackFrames || (filterStackFrames && !assemblyPrefixes.Any()) || AssemblyUtility.AssemblyNameStartsWithAnyPrefix(sf.AssemblyName, assemblyPrefixes))
                 : null,
             InnerException = ex?.InnerException?.GetExceptionDetail(code) ?? null
         };
@@ -143,21 +143,21 @@ public static class ExceptionDetailExtensions
         var methodSignatureStringBuilder = new StringBuilder(methodName);
 
         //-- Generic Method
-        if (methodBase is MethodInfo && ((MethodInfo)methodBase).IsGenericMethod)
+        if (methodBase is MethodInfo info && info.IsGenericMethod)
         {
-            var genericArgs = ((MethodInfo)methodBase).GetGenericArguments();
+            var genericArgs = info.GetGenericArguments();
 
-            methodSignatureStringBuilder.Append("<");
+            methodSignatureStringBuilder.Append('<');
             methodSignatureStringBuilder.Append(string.Join(", ", genericArgs.Select(ga => ga.Name)).Trim());
-            methodSignatureStringBuilder.Append(">");
+            methodSignatureStringBuilder.Append('>');
         }
 
         //-- Arguments
         var parameterInfos = methodBase.GetParameters();
 
-        methodSignatureStringBuilder.Append("(");
-        methodSignatureStringBuilder.Append(string.Join(", ", parameterInfos.Select(pi => $"{pi.ParameterType?.Name ?? "<unknown type>"} {pi.Name}")).Trim());
-        methodSignatureStringBuilder.Append(")");
+        methodSignatureStringBuilder.Append('(');
+        methodSignatureStringBuilder.Append(string.Join(", ", parameterInfos.Select(pi => $"{ pi.ParameterType?.Name ?? "<unknown type>" } { pi.Name }")).Trim());
+        methodSignatureStringBuilder.Append(')');
 
         return methodSignatureStringBuilder.ToString();
     }

@@ -1,4 +1,5 @@
-﻿using AGDevX.Strings;
+﻿using AGDevX.Exceptions;
+using AGDevX.Strings;
 using Xunit;
 
 namespace AGDevX.Tests.Strings;
@@ -24,8 +25,6 @@ public class StringExtensionsTests
 
         [Theory]
         [InlineData("equal", "not equal")]
-        [InlineData(null, "not equal")]
-        [InlineData("equal", null)]
         public void And_the_string_are_not_equal_then_return_false(string str1, string str2)
         {
             //-- Arrange
@@ -36,6 +35,17 @@ public class StringExtensionsTests
 
             //-- Assert
             Assert.False(result);
+        }
+
+        [Theory]
+        [InlineData("equal", null)]
+        public void And_the_str2_param_is_null_then_throw_exception(string str1, string str2)
+        {
+            //-- Arrange
+            //-- <see InlineData>
+
+            //-- Act & Assert
+            Assert.Throws<ExtensionMethodParameterNullException>(() => str1.EqualsIgnoreCase(str2));
         }
     }
 
@@ -58,8 +68,6 @@ public class StringExtensionsTests
 
         [Theory]
         [InlineData("equal", "not equal")]
-        [InlineData(null, "not equal")]
-        [InlineData("equal", null)]
         public void And_the_string_does_not_start_with_string_then_return_false(string str1, string str2)
         {
             //-- Arrange
@@ -70,6 +78,17 @@ public class StringExtensionsTests
 
             //-- Assert
             Assert.False(result);
+        }
+
+        [Theory]
+        [InlineData("equal", null)]
+        public void And_the_str2_param_is_null_then_throw_exception(string str1, string str2)
+        {
+            //-- Arrange
+            //-- <see InlineData>
+
+            //-- Act & Assert
+            Assert.Throws<ExtensionMethodParameterNullException>(() => str1.StartsWithIgnoreCase(str2));
         }
     }
 
@@ -92,8 +111,6 @@ public class StringExtensionsTests
 
         [Theory]
         [InlineData("equal", "not equal")]
-        [InlineData(null, "not equal")]
-        [InlineData("equal", null)]
         public void And_the_string_does_not_contain_the_string_then_return_false(string str1, string str2)
         {
             //-- Arrange
@@ -104,6 +121,17 @@ public class StringExtensionsTests
 
             //-- Assert
             Assert.False(result);
+        }
+
+        [Theory]
+        [InlineData("equal", null)]
+        public void And_the_str2_param_is_null_then_throw_exception(string str1, string str2)
+        {
+            //-- Arrange
+            //-- <see InlineData>
+
+            //-- Act & Assert
+            Assert.Throws<ExtensionMethodParameterNullException>(() => str1.ContainsIgnoreCase(str2));
         }
     }
 
@@ -189,7 +217,6 @@ public class StringExtensionsTests
         }
 
         [Theory]
-        [InlineData(null)]
         [InlineData("")]
         [InlineData("a")]
         [InlineData(" b")]
@@ -212,7 +239,6 @@ public class StringExtensionsTests
     public class When_calling_IsNotWhiteSpace
     {
         [Theory]
-        [InlineData(null)]
         [InlineData("")]
         [InlineData("a")]
         [InlineData(" b")]

@@ -90,7 +90,7 @@ public class DictionaryExtensionsTests
 
             Dictionary<string, object>? dictionary2 = null;
 
-            //-- Act && Assert
+            //-- Act & Assert
             Assert.Throws<ExtensionMethodParameterNullException>(() => dictionary1.Concatenate(dictionary2));
         }
     }

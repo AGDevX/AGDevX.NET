@@ -20,7 +20,7 @@ public static class ClaimsPrincipalExtensions
                     ?? throw new ClaimNotFoundException($"An Issuer claim was not found");
     }
 
-    public static string? GetSubject(this ClaimsPrincipal claimsPrincipal, bool throwExceptionWhenMissing = true)
+    public static string GetSubject(this ClaimsPrincipal claimsPrincipal, bool throwExceptionWhenMissing = true)
     {
         var subject = claimsPrincipal.GetClaimValue<string>(JwtClaimType.Subject.StringValue())
                         ?? claimsPrincipal.GetClaimValue<string>(ClaimTypes.NameIdentifier)

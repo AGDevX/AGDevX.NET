@@ -5,9 +5,9 @@ namespace AGDevX.Exceptions;
 /// <summary>
 /// Exception to throw if an error occurs while acquiring a token from an authorization server
 /// </summary>
-public sealed class AcquireTokenException : CodedException
+public sealed class AcquireTokenException : CodedApplicationException
 {
-    public override string Code => "ACQUIRE_TOKEN_EXCEPTION";
+    public override string Code { get; set; } = "ACQUIRE_TOKEN_EXCEPTION";
 
     public AcquireTokenException()
     {
@@ -17,7 +17,17 @@ public sealed class AcquireTokenException : CodedException
     {
     }
 
+    public AcquireTokenException(string message, string code) : base(message, code)
+    {
+        Code = code;
+    }
+
     public AcquireTokenException(string message, Exception innerException) : base(message, innerException)
     {
+    }
+
+    public AcquireTokenException(string message, string code, Exception innerException) : base(message, code, innerException)
+    {
+        Code = code;
     }
 }

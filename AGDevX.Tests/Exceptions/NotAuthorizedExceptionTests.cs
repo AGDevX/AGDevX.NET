@@ -9,13 +9,23 @@ public sealed class NotAuthorizedExceptionTests
     public class When_throwing_a_NotAuthorizedException
     {
         [Fact]
+        public void And_has_correct_default_code_then_assert_true()
+        {
+            //-- Arrange
+            var defaultCode = "NOT_AUTHORIZED_EXCEPTION";
+
+            //-- Assert
+            Assert.True(new NotAuthorizedException().Code.Equals(defaultCode));
+        }
+
+        [Fact]
         public void And_has_correct_code_then_assert_true()
         {
             //-- Arrange
-            var code = "NOT_AUTHORIZED_EXCEPTION";
+            var code = "ex";
 
             //-- Assert
-            Assert.True(new NotAuthorizedException().Code.Equals(code));
+            Assert.True(new NotAuthorizedException("msg", code).Code.Equals(code));
         }
 
         [Fact]
@@ -39,6 +49,21 @@ public sealed class NotAuthorizedExceptionTests
             //-- Assert
             Assert.True(new NotAuthorizedException(message, innerException).Message.Equals(message));
             Assert.True(new NotAuthorizedException(message, innerException).InnerException == innerException);
+        }
+
+        [Fact]
+        public void And_should_have_inner_exception_then_make_all_properties_are_correct()
+        {
+            //-- Arrange
+            var message = "Test message";
+            var code = "ex";
+            var innerExceptionMessage = "Inner exception message";
+            var innerException = new Exception(innerExceptionMessage);
+
+            //-- Assert
+            Assert.True(new NotAuthorizedException(message, code, innerException).Message.Equals(message));
+            Assert.True(new NotAuthorizedException(message, code, innerException).Code.Equals(code));
+            Assert.True(new NotAuthorizedException(message, code, innerException).InnerException == innerException);
         }
     }
 }

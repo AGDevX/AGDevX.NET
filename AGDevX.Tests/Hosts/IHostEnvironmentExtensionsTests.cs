@@ -1,4 +1,7 @@
 ﻿using System;
+using AGDevX.Assemblies;
+using AGDevX.Exceptions;
+using System.Reflection;
 using AGDevX.Hosts;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
@@ -18,39 +21,22 @@ public class IHostEnvironmentExtensionsTests
     public class When_calling_IsOneOf
     {
         [Fact]
-        public void And_the_host_environment_is_null_with_a_null_array_of_environments_then_return_false()
+        public void And_the_host_environment_is_null_with_a_null_array_of_environments_then_throw_exception()
         {
             //-- Arrange
-            IHostEnvironment? hostEnvironment = null;
+            var hostEnvironment = _prodHostEnvironment;
             string[]? environments = null;
 
-            //-- Act
-            var isOneOf = hostEnvironment.IsOneOf(environments);
-
-            //-- Assert
-            Assert.False(isOneOf);
-        }
-
-        [Fact]
-        public void And_the_host_environment_is_null_with_an_empty_array_of_environments_then_return_false()
-        {
-            //-- Arrange
-            IHostEnvironment? hostEnvironment = null;
-            string[]? environments = Array.Empty<string>();
-
-            //-- Act
-            var isOneOf = hostEnvironment.IsOneOf(environments);
-
-            //-- Assert
-            Assert.False(isOneOf);
+            //-- Act && Assert
+            Assert.Throws<ExtensionMethodParameterNullException>(() => hostEnvironment.IsOneOf(environments));
         }
 
         [Fact]
         public void And_the_host_environment_is_a_prod_environment_with_a_prod_environment_then_return_true()
         {
             //-- Arrange
-            IHostEnvironment? hostEnvironment = _prodHostEnvironment;
-            string[]? environments = new string[1] { "Prod" };
+            var hostEnvironment = _prodHostEnvironment;
+            var environments = new string[1] { "Prod" };
 
             //-- Act
             var isOneOf = hostEnvironment.IsOneOf(environments);
@@ -63,8 +49,8 @@ public class IHostEnvironmentExtensionsTests
         public void And_the_host_environment_is_a_prod_environment_with_a_prod_and_non_prod_environment_then_return_true()
         {
             //-- Arrange
-            IHostEnvironment? hostEnvironment = _prodHostEnvironment;
-            string[]? environments = new string[2] { "QA", "Prod" };
+            var hostEnvironment = _prodHostEnvironment;
+            var environments = new string[2] { "QA", "Prod" };
 
             //-- Act
             var isOneOf = hostEnvironment.IsOneOf(environments);
@@ -77,8 +63,8 @@ public class IHostEnvironmentExtensionsTests
         public void And_the_host_environment_is_a_prod_environment_with_a_non_prod_environment_then_return_false()
         {
             //-- Arrange
-            IHostEnvironment? hostEnvironment = _prodHostEnvironment;
-            string[]? environments = new string[2] { "Local", "Dev" };
+            var hostEnvironment = _prodHostEnvironment;
+            var environments = new string[2] { "Local", "Dev" };
 
             //-- Act
             var isOneOf = hostEnvironment.IsOneOf(environments);

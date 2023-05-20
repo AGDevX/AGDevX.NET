@@ -11,15 +11,10 @@ public class DictionaryExtensionsTests
     public class When_calling_ReverseKeysAndValues
     {
         [Fact]
-        public void And_the_dictionary_has_at_least_one_record_then_return_the_reversed_dictionary()
+        public void And_the_dictionary_has_no_records_then_return_the_reversed_dictionary()
         {
             //-- Arrange
-            var dictionary = new Dictionary<string, object>
-        {
-            { "Dave", "Lister" },
-            { "Arnold", "Rimmer" },
-            { "Cat", "Kryten" }
-        };
+            var dictionary = new Dictionary<string, object>();
 
             //-- Act
             var reversedDictionary = dictionary.ReverseKeysAndValues();
@@ -30,13 +25,22 @@ public class DictionaryExtensionsTests
         }
 
         [Fact]
-        public void And_the_dictionary_is_null_then_return_the_reversed_dictionary()
+        public void And_the_dictionary_has_at_least_one_record_then_return_the_reversed_dictionary()
         {
             //-- Arrange
-            Dictionary<string, string>? dictionary = null;
+            var dictionary = new Dictionary<string, object>
+            {
+                { "Dave", "Lister" },
+                { "Arnold", "Rimmer" },
+                { "Cat", "Kryten" }
+            };
 
-            //-- Act && Assert
-            Assert.Throws<ExtensionMethodParameterNullException>(() => dictionary.ReverseKeysAndValues());
+            //-- Act
+            var reversedDictionary = dictionary.ReverseKeysAndValues();
+
+            //-- Assert
+            Assert.Equal(dictionary.Select(d => d.Key), reversedDictionary.Select(d => d.Value));
+            Assert.Equal(dictionary.Select(d => d.Value), reversedDictionary.Select(d => d.Key));
         }
     }
 
@@ -47,15 +51,15 @@ public class DictionaryExtensionsTests
         {
             //-- Arrange
             var dictionary1 = new Dictionary<string, object>
-        {
-            { "Dave", "Lister" },
-            { "Arnold", "Rimmer" }
-        };
+            {
+                { "Dave", "Lister" },
+                { "Arnold", "Rimmer" }
+            };
 
             var dictionary2 = new Dictionary<string, object>
-        {
-            { "Cat", "Kryten" }
-        };
+            {
+                { "Cat", "Kryten" }
+            };
 
             //-- Act
             var concatenatedDictionary = dictionary1.Concatenate(dictionary2);
@@ -75,29 +79,14 @@ public class DictionaryExtensionsTests
         }
 
         [Fact]
-        public void And_dict1_is_null_and_dict2_has_at_least_1_value_then_throw_ExtensionMethodParameterNullException()
-        {
-            //-- Arrange
-            Dictionary<string, object>? dictionary1 = null;
-
-            var dictionary2 = new Dictionary<string, object>
-        {
-            { "Cat", "Kryten" }
-        };
-
-            //-- Act && Assert
-            Assert.Throws<ExtensionMethodParameterNullException>(() => dictionary1.Concatenate(dictionary2));
-        }
-
-        [Fact]
         public void And_dict1_has_at_least_one_record_and_dict2_is_null_then_return_concatenated_dictionary()
         {
             //-- Arrange
             var dictionary1 = new Dictionary<string, object>
-        {
-            { "Dave", "Lister" },
-            { "Arnold", "Rimmer" }
-        };
+            {
+                { "Dave", "Lister" },
+                { "Arnold", "Rimmer" }
+            };
 
             Dictionary<string, object>? dictionary2 = null;
 

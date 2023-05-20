@@ -4,18 +4,18 @@ using Xunit;
 
 namespace AGDevX.Database.Tests.Exceptions;
 
-public sealed class ApplicationStartupExceptionTests
+public sealed class CodedApplicationExceptionTests
 {
-    public class When_throwing_an_ApplicationStartupException
+    public class When_throwing_a_CodedApplicationException
     {
         [Fact]
         public void And_has_correct_default_code_then_assert_true()
         {
             //-- Arrange
-            var defaultCode = "APPLICATION_STARTUP_EXCEPTION";
+            var defaultCode = "CODED_APPLICATION_EXCEPTION";
 
             //-- Assert
-            Assert.True(new ApplicationStartupException().Code.Equals(defaultCode));
+            Assert.True(new CodedApplicationException().Code.Equals(defaultCode));
         }
 
         [Fact]
@@ -25,7 +25,7 @@ public sealed class ApplicationStartupExceptionTests
             var code = "ex";
 
             //-- Assert
-            Assert.True(new ApplicationStartupException("msg", code).Code.Equals(code));
+            Assert.True(new CodedApplicationException("msg", code).Code.Equals(code));
         }
 
         [Fact]
@@ -35,7 +35,7 @@ public sealed class ApplicationStartupExceptionTests
             var message = "Test message";
 
             //-- Assert
-            Assert.True(new ApplicationStartupException(message).Message.Equals(message));
+            Assert.True(new CodedApplicationException(message).Message.Equals(message));
         }
 
         [Fact]
@@ -47,8 +47,8 @@ public sealed class ApplicationStartupExceptionTests
             var innerException = new Exception(innerExceptionMessage);
 
             //-- Assert
-            Assert.True(new ApplicationStartupException(message, innerException).Message.Equals(message));
-            Assert.True(new ApplicationStartupException(message, innerException).InnerException == innerException);
+            Assert.True(new CodedApplicationException(message, innerException).Message.Equals(message));
+            Assert.True(new CodedApplicationException(message, innerException).InnerException == innerException);
         }
 
         [Fact]
@@ -61,9 +61,9 @@ public sealed class ApplicationStartupExceptionTests
             var innerException = new Exception(innerExceptionMessage);
 
             //-- Assert
-            Assert.True(new ApplicationStartupException(message, code, innerException).Message.Equals(message));
-            Assert.True(new ApplicationStartupException(message, code, innerException).Code.Equals(code));
-            Assert.True(new ApplicationStartupException(message, code, innerException).InnerException == innerException);
+            Assert.True(new CodedApplicationException(message, code, innerException).Message.Equals(message));
+            Assert.True(new CodedApplicationException(message, code, innerException).Code.Equals(code));
+            Assert.True(new CodedApplicationException(message, code, innerException).InnerException == innerException);
         }
     }
 }

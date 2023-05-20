@@ -1,4 +1,6 @@
-﻿using AGDevX.IEnumerables;
+﻿using System.Diagnostics.CodeAnalysis;
+using AGDevX.Exceptions;
+using AGDevX.IEnumerables;
 using Microsoft.Extensions.Hosting;
 
 namespace AGDevX.Hosts;
@@ -11,13 +13,13 @@ public static class IHostEnvironmentExtensions
     /// <param name="iHostEnvironment">IHostEnvironment to check (required)</param>
     /// <param name="environments">Environments to check against (required)</param>
     /// <returns>True if the IHostEnvironment is configured for any of the provided environments. Otherwise, false.</returns>
-    public static bool IsOneOf(this IHostEnvironment? iHostEnvironment, params string[] environments)
+    public static bool IsOneOf(this IHostEnvironment iHostEnvironment, [AllowNull] params string[] environments)
     {
-        if (iHostEnvironment == null || !environments.AnySafe())
+        if (environments == null)
         {
-            return false;
+            throw new ExtensionMethodParameterNullException(nameof(environments));
         }
 
-        return environments!.ContainsIgnoreCase(iHostEnvironment.EnvironmentName);
+        return environments.ContainsIgnoreCase(iHostEnvironment.EnvironmentName);
     }
 }

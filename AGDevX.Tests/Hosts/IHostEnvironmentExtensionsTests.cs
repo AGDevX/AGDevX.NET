@@ -9,9 +9,9 @@ public class IHostEnvironmentExtensionsTests
 {
     private static IHostEnvironment _prodHostEnvironment = new HostEnvironment
     {
-        ApplicationName = "AGDevXTests",
+        ApplicationName = "AGDevX",
         EnvironmentName = "Prod",
-        ContentRootPath = @"C:\",
+        ContentRootPath = "",
         ContentRootFileProvider = new PhysicalFileProvider(@"C:\")
     };
 

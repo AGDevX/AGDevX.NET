@@ -12,18 +12,14 @@ public class AssemblyUtilityTests
     public class When_calling_GetAssemblies
     {
         [Fact]
-        public void With_null_parent_and_null_prefix_list_then_return_all_asemblies()
+        public void With_null_parent_and_null_prefix_list_then_return_throw_exception()
         {
             //-- Arrange
             Assembly? parent = null;
             List<string>? assemblyPrefixes = null;
 
-            //--Act
-            var assemblies = AssemblyUtility.GetAssemblies(parent, assemblyPrefixes);
-
-            //-- Assert
-            Assert.Contains(assemblies, a => a.FullName!.StartsWithIgnoreCase("System"));
-            Assert.Contains(assemblies, a => a.FullName!.StartsWithIgnoreCase("AGDevX"));
+            //-- Act & Assert
+            Assert.Throws<ExtensionMethodParameterNullException>(() => AssemblyUtility.GetAssemblies(parent, assemblyPrefixes));
         }
 
         [Fact]

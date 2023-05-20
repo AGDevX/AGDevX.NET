@@ -11,8 +11,7 @@ public class IHostEnvironmentExtensionsTests
     {
         ApplicationName = "AGDevX",
         EnvironmentName = "Prod",
-        ContentRootPath = "",
-        ContentRootFileProvider = new PhysicalFileProvider(@"C:\")
+        ContentRootPath = ""
     };
 
     public class When_calling_IsOneOf
@@ -76,6 +75,8 @@ public class IHostEnvironmentExtensionsTests
         public required string EnvironmentName { get; set; }
         public required string ApplicationName { get; set; }
         public required string ContentRootPath { get; set; }
-        public required IFileProvider ContentRootFileProvider { get; set; }
+#pragma warning disable CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
+        public IFileProvider? ContentRootFileProvider { get; set; }
+#pragma warning restore CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
     }
 }

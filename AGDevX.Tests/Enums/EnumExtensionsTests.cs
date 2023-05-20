@@ -20,7 +20,7 @@ public class EnumExtensionsTests
         public void With_a_value_that_is_one_of_then_return_true()
         {
             //-- Arrange
-            TestEnum kenshin = TestEnum.Kenshin;
+            var kenshin = TestEnum.Kenshin;
 
             //-- Act
             var isOneOf = kenshin.IsOneOf(TestEnum.Spike, TestEnum.Kenshin);
@@ -33,7 +33,7 @@ public class EnumExtensionsTests
         public void With_a_value_that_is_not_one_of_then_return_false()
         {
             //-- Arrange
-            TestEnum vash = TestEnum.Vash;
+            var vash = TestEnum.Vash;
 
             //-- Act
             var isOneOf = vash.IsOneOf(TestEnum.Spike, TestEnum.Kenshin);

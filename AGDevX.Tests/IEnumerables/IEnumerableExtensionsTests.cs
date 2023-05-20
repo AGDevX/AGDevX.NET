@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AGDevX.Exceptions;
 using AGDevX.IEnumerables;
 using Xunit;
 
@@ -97,25 +98,7 @@ public class IEnumerableExtensionsTests
         }
 
         [Fact]
-        public void And_list1_is_null_with_list2_not_null_then_return_false()
-        {
-            //-- Arrange
-            List<string>? strings1 = null;
-
-            var strings2 = new List<string>
-            {
-                "oh", "my", "golly"
-            };
-
-            //-- Act
-            var hasCommonElement = strings1.HasCommonStringElement(strings2);
-
-            //-- Assert
-            Assert.False(hasCommonElement);
-        }
-
-        [Fact]
-        public void And_list1_is_not_null_with_list2_null_then_return_false()
+        public void And_list1_is_not_null_with_list2_null_then_throw_exception()
         {
             //-- Arrange
             var strings1 = new List<string>
@@ -125,11 +108,8 @@ public class IEnumerableExtensionsTests
 
             List<string>? strings2 = null;
 
-            //-- Act
-            var hasCommonElement = strings1.HasCommonStringElement(strings2);
-
-            //-- Assert
-            Assert.False(hasCommonElement);
+            //-- Act & Assert
+            Assert.Throws<ExtensionMethodParameterNullException>(() => strings1.HasCommonStringElement(strings2));
         }
     }
 
@@ -251,7 +231,7 @@ public class IEnumerableExtensionsTests
         }
 
         [Fact]
-        public void And_list_has_null_element_with_null_element_match_then_return_true()
+        public void And_list_has_null_element_with_null_element_match_then_throw_exception()
         {
             //-- Arrange
             var strings = new List<string?>
@@ -261,11 +241,8 @@ public class IEnumerableExtensionsTests
 
             string? str = null;
 
-            //-- Act
-            var contains = strings.ContainsIgnoreCase(str);
-
-            //-- Assert
-            Assert.True(contains);
+            //-- Act & Assert
+            Assert.Throws<ExtensionMethodParameterNullException>(() => strings.ContainsIgnoreCase(str));
         }
 
         [Fact]
@@ -278,39 +255,6 @@ public class IEnumerableExtensionsTests
             };
 
             var str = "hey";
-
-            //-- Act
-            var contains = strings.ContainsIgnoreCase(str);
-
-            //-- Assert
-            Assert.False(contains);
-        }
-
-        [Fact]
-        public void And_list_is_null_then_return_false()
-        {
-            //-- Arrange
-            List<string>? strings = null;
-
-            var str = "hello";
-
-            //-- Act
-            var contains = strings.ContainsIgnoreCase(str);
-
-            //-- Assert
-            Assert.False(contains);
-        }
-
-        [Fact]
-        public void And_list_does_not_have_null_element_with_null_element_match_then_return_false()
-        {
-            //-- Arrange
-            var strings = new List<string>
-            {
-                "hi", "there", "hello", "it's", "me", "I'm", "the", "adstronaut"
-            };
-
-            string? str = null;
 
             //-- Act
             var contains = strings.ContainsIgnoreCase(str);

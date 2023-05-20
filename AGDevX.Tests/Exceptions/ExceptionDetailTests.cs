@@ -36,7 +36,7 @@ public sealed class ExceptionDetailTests
                 //-- Act
                 try
                 {
-                    void localF<T>()
+                    static void localF<T>()
                     {
                         throw _applicationStartupException!;
                     }

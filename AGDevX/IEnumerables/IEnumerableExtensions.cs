@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using AGDevX.Exceptions;
 
 namespace AGDevX.IEnumerables;
 
@@ -28,11 +30,11 @@ public static class IEnumerableExtensions
     /// <param name="enumerable2">IEnumerable 2 to check against IEnumerable 1 (required)</param>
     /// <param name="stringComparer">StringComparer to use when comparing the strings (required)</param>
     /// <returns>True if two elements have a common element. Otherwise, false.</returns>
-    public static bool HasCommonStringElement(this IEnumerable<string>? enumerable1, IEnumerable<string>? enumerable2, StringComparer? stringComparer = default)
+    public static bool HasCommonStringElement(this IEnumerable<string> enumerable1, [AllowNull] IEnumerable<string> enumerable2, StringComparer? stringComparer = default)
     {
-        if (enumerable1 == null || enumerable2 == null)
+        if (enumerable2 == null)
         {
-            return false;
+            throw new ExtensionMethodParameterNullException(nameof(enumerable2));
         }
 
         stringComparer ??= StringComparer.OrdinalIgnoreCase;
@@ -69,19 +71,19 @@ public static class IEnumerableExtensions
     /// Determines if a string IEnumerable contains the provided string
     /// </summary>
     /// <param name="strings">IEnumerable of strings to check against (required)</param>
-    /// <param name="str">String to check against the IEnumerable</param>
+    /// <param name="str">String to check against the IEnumerable (required)</param>
     /// <param name="stringComparer">StringComparer to use when comparing the strings (required)</param>
     /// <returns>True if the IEnumerable conatins the provided string. Otherwise, false.</returns>
-    public static bool ContainsIgnoreCase(this IEnumerable<string?>? strings, string? str, StringComparer? stringComparer = default)
+    public static bool ContainsIgnoreCase(this IEnumerable<string?> strings, [AllowNull] string str, StringComparer? stringComparer = default)
     {
-        if (strings.IsNullOrEmpty())
+        if (str == null)
         {
-            return false;
+            throw new ExtensionMethodParameterNullException(nameof(str));
         }
 
         stringComparer ??= StringComparer.OrdinalIgnoreCase;
 
-        return strings!.Contains(str, stringComparer);
+        return strings.Contains(str, stringComparer);
     }
 
     /// <summary>

@@ -47,7 +47,7 @@ public class AttributeExtensionsTests
             //-- Arrange
             string? source = null;
 
-            //-- Act && Assert
+            //-- Act & Assert
             Assert.Throws<ExtensionMethodParameterNullException>(() => source.GetDescription());
         }
     }

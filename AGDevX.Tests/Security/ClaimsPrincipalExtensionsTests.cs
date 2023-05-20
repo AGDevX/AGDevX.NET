@@ -51,7 +51,7 @@ public class ClaimsPrincipalExtensionsTests
                 new Claim(ClaimTypes.Name, "August Geier"),
             }, "mock"));
 
-            //-- Act && Assert
+            //-- Act & Assert
             Assert.Throws<ClaimNotFoundException>(() => user.GetEmail());
         }
     }

@@ -22,8 +22,8 @@ public class AssemblyUtilityTests
             var assemblies = AssemblyUtility.GetAssemblies(parent, assemblyPrefixes);
 
             //-- Assert
-            Assert.Contains(assemblies, a => a.FullName.StartsWithIgnoreCase("System"));
-            Assert.Contains(assemblies, a => a.FullName.StartsWithIgnoreCase("AGDevX"));
+            Assert.Contains(assemblies, a => a.FullName!.StartsWithIgnoreCase("System"));
+            Assert.Contains(assemblies, a => a.FullName!.StartsWithIgnoreCase("AGDevX"));
         }
 
         [Fact]
@@ -41,9 +41,9 @@ public class AssemblyUtilityTests
             var assemblies = AssemblyUtility.GetAssemblies(parent, assemblyPrefixes);
 
             //-- Assert
-            Assert.DoesNotContain(assemblies, a => a.FullName.StartsWithIgnoreCase("System"));
-            Assert.Contains(assemblies, a => a.FullName.StartsWithIgnoreCase("Microsoft"));
-            Assert.Contains(assemblies, a => a.FullName.StartsWithIgnoreCase("AGDevx"));
+            Assert.DoesNotContain(assemblies, a => a.FullName!.StartsWithIgnoreCase("System"));
+            Assert.Contains(assemblies, a => a.FullName!.StartsWithIgnoreCase("Microsoft"));
+            Assert.Contains(assemblies, a => a.FullName!.StartsWithIgnoreCase("AGDevx"));
         }
     }
 
@@ -93,7 +93,7 @@ public class AssemblyUtilityTests
                 "AGDevX"
             };
 
-            //-- Act && Assert
+            //-- Act & Assert
             Assert.Throws<ExtensionMethodParameterNullException>(() => AssemblyUtility.AssemblyNameStartsWithAnyPrefix(assemblyName, assemblyPrefixes));
         }
 
@@ -104,7 +104,7 @@ public class AssemblyUtilityTests
             var assemblyName = "AGDevX";
             List<string>? assemblyPrefixes = null;
 
-            //-- Act && Assert
+            //-- Act & Assert
             Assert.Throws<ExtensionMethodParameterNullException>(() => AssemblyUtility.AssemblyNameStartsWithAnyPrefix(assemblyName, assemblyPrefixes));
         }
 
@@ -115,7 +115,7 @@ public class AssemblyUtilityTests
             string? assemblyName = null;
             List<string>? assemblyPrefixes = null;
 
-            //-- Act && Assert
+            //-- Act & Assert
             Assert.Throws<ExtensionMethodParameterNullException>(() => AssemblyUtility.AssemblyNameStartsWithAnyPrefix(assemblyName, assemblyPrefixes));
         }
     }

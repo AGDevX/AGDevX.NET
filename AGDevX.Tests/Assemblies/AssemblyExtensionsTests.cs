@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 using AGDevX.Assemblies;
+using AGDevX.Exceptions;
 using Xunit;
 
 namespace AGDevX.Tests.Assemblies;
@@ -63,6 +64,17 @@ public class AssemblyExtensionsTests
 
             //-- Assert
             Assert.False(startsWith);
+        }
+
+        [Fact]
+        public void With_null_prefix_then_throw_exception()
+        {
+            //-- Arrange
+            var assembly = Assembly.GetExecutingAssembly();
+            string? prefix = null;
+
+            //-- Act & Assert
+            Assert.Throws<ExtensionMethodParameterNullException>(() => assembly.FullNameStartsWithPrefix(prefix));
         }
     }
 
@@ -132,6 +144,17 @@ public class AssemblyExtensionsTests
 
             //-- Assert
             Assert.False(anyStartsWith);
+        }
+
+        [Fact]
+        public void With_null_prefixes_then_throw_exception()
+        {
+            //-- Arrange
+            var assembly = Assembly.GetExecutingAssembly();
+            List<string>? prefixes = null;
+
+            //-- Act & Assert
+            Assert.Throws<ExtensionMethodParameterNullException>(() => assembly.FullNameStartsWithPrefixes(prefixes));
         }
     }
 }

@@ -42,7 +42,7 @@ public static class ExceptionDetailExtensions
     /// <param name="filterStackFrames">Determines wither or not to filter the Stack Frames (required)</param>
     /// <param name="assemblyPrefixes">Assembly FullName prefixes that is used to filter the StackFrames (required)</param>
     /// <returns><see cref="ExceptionDetail"/></returns>
-    public static ExceptionDetail GetExceptionDetail(this CodedException codedEx, bool includeStackFrames = true, bool filterStackFrames = false, IEnumerable<string>? assemblyPrefixes = default)
+    public static ExceptionDetail GetExceptionDetail(this CodedApplicationException codedEx, bool includeStackFrames = true, bool filterStackFrames = false, IEnumerable<string>? assemblyPrefixes = default)
     {
         assemblyPrefixes ??= new List<string>();
         var code = codedEx.Code;
@@ -66,7 +66,7 @@ public static class ExceptionDetailExtensions
                 : null
         };
 
-        if (codedEx.InnerException is CodedException innerCodedEx)
+        if (codedEx.InnerException is CodedApplicationException innerCodedEx)
         {
             exceptionDetail.InnerException = innerCodedEx.GetExceptionDetail() ?? null;
         }

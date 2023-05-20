@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
+using AGDevX.Exceptions;
 using AGDevX.Strings;
 
 namespace AGDevX.Assemblies;
@@ -17,7 +19,7 @@ public static class AssemblyUtility
     /// <param name="parent">The base assembly used to retrieve referenced assemblies (optional)</param>
     /// <param name="assemblyPrefixes">List of prefixes to filter out assemblies whose FullName does not begin with the prefixes (optional)</param>
     /// <returns>A list of assemblies referenced by the base assembly</returns>
-    public static List<Assembly> GetAssemblies(Assembly? parent, IEnumerable<string>? assemblyPrefixes)
+    public static List<Assembly> GetAssemblies(Assembly? parent = default, IEnumerable<string>? assemblyPrefixes = default)
     {
         var referencedAssemblies = parent?.GetReferencedAssemblies().Select(a => Assembly.Load(a));
         var currentDomainAssemblies = AppDomain.CurrentDomain.GetAssemblies();
@@ -38,12 +40,19 @@ public static class AssemblyUtility
     /// <param name="assemblyFullName">Assembly to check against (required)</param>
     /// <param name="assemblyPrefixes">List of prefixes that will be used to check the assembly's FullName against (required)</param>
     /// <returns>True if the assembly's FullName begins with any of the provided prefixes</returns>
-    public static bool AssemblyNameStartsWithAnyPrefix(string assemblyFullName, IEnumerable<string> assemblyPrefixes)
+    public static bool AssemblyNameStartsWithAnyPrefix([AllowNull] string assemblyFullName, [AllowNull] IEnumerable<string> assemblyPrefixes)
     {
-        assemblyPrefixes ??= Enumerable.Empty<string>();
+        if (assemblyFullName == null)
+        {
+            throw new ExtensionMethodParameterNullException(nameof(assemblyFullName));
+        }
 
-        return assemblyFullName.IsNullOrWhiteSpace()
-                ? false
-                : assemblyPrefixes.Any(ap => assemblyFullName!.StartsWithIgnoreCase(ap));
+        if (assemblyPrefixes == null)
+        {
+            throw new ExtensionMethodParameterNullException(nameof(assemblyPrefixes));
+        }
+
+        return !assemblyFullName.IsNullOrWhiteSpace()
+            && assemblyPrefixes.Any(ap => assemblyFullName.StartsWithIgnoreCase(ap));
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 using AGDevX.Assemblies;
+using AGDevX.Exceptions;
 using AGDevX.Strings;
 using Xunit;
 
@@ -52,7 +53,7 @@ public class AssemblyUtilityTests
         public void With_assembly_name_matching_a_prefix_then_return_true()
         {
             //-- Arrange
-            string assemblyName = "AGDevX";
+            var assemblyName = "AGDevX";
             var assemblyPrefixes = new List<string>
             {
                 "AGDevX"
@@ -66,10 +67,10 @@ public class AssemblyUtilityTests
         }
 
         [Fact]
-        public void With_assembly_name_not_matching_a_prefix_then_return_false()
+        public void With_assembly_name_not_matching_a_prefix_then_throw_exception()
         {
             //-- Arrange
-            string assemblyName = "AGDevX";
+            var assemblyName = "AGDevX";
             var assemblyPrefixes = new List<string>
             {
                 "Spider"
@@ -92,39 +93,30 @@ public class AssemblyUtilityTests
                 "AGDevX"
             };
 
-            //--Act
-            var any = AssemblyUtility.AssemblyNameStartsWithAnyPrefix(assemblyName, assemblyPrefixes);
-
-            //-- Assert
-            Assert.False(any);
+            //-- Act && Assert
+            Assert.Throws<ExtensionMethodParameterNullException>(() => AssemblyUtility.AssemblyNameStartsWithAnyPrefix(assemblyName, assemblyPrefixes));
         }
 
         [Fact]
-        public void With_a_null_assembly_prefix_list_then_return_false()
+        public void With_a_null_assembly_prefix_list_then_throw_exception()
         {
             //-- Arrange
-            string assemblyName = "AGDevX";
+            var assemblyName = "AGDevX";
             List<string>? assemblyPrefixes = null;
 
-            //--Act
-            var any = AssemblyUtility.AssemblyNameStartsWithAnyPrefix(assemblyName, assemblyPrefixes);
-
-            //-- Assert
-            Assert.False(any);
+            //-- Act && Assert
+            Assert.Throws<ExtensionMethodParameterNullException>(() => AssemblyUtility.AssemblyNameStartsWithAnyPrefix(assemblyName, assemblyPrefixes));
         }
 
         [Fact]
-        public void With_a_null_assembly_name_and_null_assembly_list_then_return_false()
+        public void With_a_null_assembly_name_and_null_assembly_list_then_throw_exception()
         {
             //-- Arrange
             string? assemblyName = null;
             List<string>? assemblyPrefixes = null;
 
-            //--Act
-            var any = AssemblyUtility.AssemblyNameStartsWithAnyPrefix(assemblyName, assemblyPrefixes);
-
-            //-- Assert
-            Assert.False(any);
+            //-- Act && Assert
+            Assert.Throws<ExtensionMethodParameterNullException>(() => AssemblyUtility.AssemblyNameStartsWithAnyPrefix(assemblyName, assemblyPrefixes));
         }
     }
 }

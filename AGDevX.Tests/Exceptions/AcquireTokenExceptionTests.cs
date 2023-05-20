@@ -1,22 +1,31 @@
 ﻿using System;
 using AGDevX.Exceptions;
-using AGDevX.Strings;
 using Xunit;
 
 namespace AGDevX.Database.Tests.Exceptions;
 
 public sealed class AcquireTokenExceptionTests
 {
-    public class When_throwing_a_AcquireTokenException
+    public class When_throwing_an_AcquireTokenException
     {
+        [Fact]
+        public void And_has_correct_default_code_then_assert_true()
+        {
+            //-- Arrange
+            var defaultCode = "ACQUIRE_TOKEN_EXCEPTION";
+
+            //-- Assert
+            Assert.True(new AcquireTokenException().Code.Equals(defaultCode));
+        }
+
         [Fact]
         public void And_has_correct_code_then_assert_true()
         {
             //-- Arrange
-            var code = "ACQUIRE_TOKEN_EXCEPTION";
+            var code = "ex";
 
             //-- Assert
-            Assert.True(new AcquireTokenException().Code.EqualsIgnoreCase(code));
+            Assert.True(new AcquireTokenException("msg", code).Code.Equals(code));
         }
 
         [Fact]
@@ -26,7 +35,7 @@ public sealed class AcquireTokenExceptionTests
             var message = "Test message";
 
             //-- Assert
-            Assert.True(new AcquireTokenException(message).Message.EqualsIgnoreCase(message));
+            Assert.True(new AcquireTokenException(message).Message.Equals(message));
         }
 
         [Fact]
@@ -38,8 +47,23 @@ public sealed class AcquireTokenExceptionTests
             var innerException = new Exception(innerExceptionMessage);
 
             //-- Assert
-            Assert.True(new AcquireTokenException(message, innerException).Message.EqualsIgnoreCase(message));
+            Assert.True(new AcquireTokenException(message, innerException).Message.Equals(message));
             Assert.True(new AcquireTokenException(message, innerException).InnerException == innerException);
+        }
+
+        [Fact]
+        public void And_should_have_inner_exception_then_make_all_properties_are_correct()
+        {
+            //-- Arrange
+            var message = "Test message";
+            var code = "ex";
+            var innerExceptionMessage = "Inner exception message";
+            var innerException = new Exception(innerExceptionMessage);
+
+            //-- Assert
+            Assert.True(new AcquireTokenException(message, code, innerException).Message.Equals(message));
+            Assert.True(new AcquireTokenException(message, code, innerException).Code.Equals(code));
+            Assert.True(new AcquireTokenException(message, code, innerException).InnerException == innerException);
         }
     }
 }

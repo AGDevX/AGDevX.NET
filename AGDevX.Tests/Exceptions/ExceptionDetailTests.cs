@@ -17,7 +17,7 @@ public sealed class ExceptionDetailTests
     private static ExtensionMethodException? _extensionMethodException;
     private static ApplicationStartupException? _applicationStartupException;
 
-    private static List<string> _assemblyPrefixes = new List<string>() { "AGDevX", "JMC", "RD" };
+    private static readonly List<string> _assemblyPrefixes = new() { "AGDevX", "JMC", "RD" };
 
     public class When_calling_GetExceptionDetail
     {
@@ -30,8 +30,8 @@ public sealed class ExceptionDetailTests
                 _nullReferenceException = new NullReferenceException(_nullReferenceExceptionMessage);
                 _applicationStartupException = new ApplicationStartupException(_applicationStartupExceptionMessage, _nullReferenceException);
 
-                bool includeStackFrames = true;
-                bool filterStackFrames = true;
+                var includeStackFrames = true;
+                var filterStackFrames = true;
 
                 //-- Act
                 try
@@ -53,14 +53,12 @@ public sealed class ExceptionDetailTests
                     Assert.True(exceptionDetail.StackFrames.IsNotNull());
                     Assert.IsType<int>(exceptionDetail.StackFrames.First().LineNumber);
                     Assert.True(exceptionDetail.StackFrames.First().Method!.Equals("localF<T>()"));
-                    Assert.True(exceptionDetail.StackFrames.First().AssemblyFile!.Contains("AGDevX.Tests.dll"));
-                    Assert.True(exceptionDetail.StackFrames.First().AssemblyName!.Contains("AGDevX.Tests"));
+                    Assert.Contains("AGDevX.Tests.dll", exceptionDetail.StackFrames.First().AssemblyFile);
+                    Assert.Contains("AGDevX.Tests", exceptionDetail.StackFrames.First().AssemblyName);
                     Assert.True(exceptionDetail.StackFrames.First().Class!.Equals("AGDevX.Tests.Exceptions.ExceptionDetailTests+When_calling_GetExceptionDetail+And_including_stack_frames_and_filtering_stack_frames_for_a_generic_method"));
-                    Assert.True(exceptionDetail.StackFrames.First().CodeFile!.Contains("ExceptionDetailTests.cs"));
+                    Assert.Contains("ExceptionDetailTests.cs", exceptionDetail.StackFrames.First().CodeFile);
                     Assert.True(exceptionDetail.InnerException.IsNotNull());
                 }
-
-
             }
         }
 
@@ -73,8 +71,8 @@ public sealed class ExceptionDetailTests
                 _nullReferenceException = new NullReferenceException(_nullReferenceExceptionMessage);
                 _applicationStartupException = new ApplicationStartupException(_applicationStartupExceptionMessage, _nullReferenceException);
 
-                bool includeStackFrames = true;
-                bool filterStackFrames = true;
+                var includeStackFrames = true;
+                var filterStackFrames = true;
 
                 //-- Act
                 try
@@ -91,10 +89,10 @@ public sealed class ExceptionDetailTests
                     Assert.True(exceptionDetail.StackFrames.IsNotNull());
                     Assert.IsType<int>(exceptionDetail.StackFrames.First().LineNumber);
                     Assert.True(exceptionDetail.StackFrames.First().Method!.Equals("Then_return_filtered_stack_frames()"));
-                    Assert.True(exceptionDetail.StackFrames.First().AssemblyFile!.Contains("AGDevX.Tests.dll"));
-                    Assert.True(exceptionDetail.StackFrames.First().AssemblyName!.Contains("AGDevX.Tests"));
+                    Assert.Contains("AGDevX.Tests.dll", exceptionDetail.StackFrames.First().AssemblyFile);
+                    Assert.Contains("AGDevX.Tests", exceptionDetail.StackFrames.First().AssemblyName);
                     Assert.True(exceptionDetail.StackFrames.First().Class!.Equals("AGDevX.Tests.Exceptions.ExceptionDetailTests+When_calling_GetExceptionDetail+And_including_stack_frames_and_filtering_stack_frames_for_a_non_generic_method"));
-                    Assert.True(exceptionDetail.StackFrames.First().CodeFile!.Contains("ExceptionDetailTests.cs"));
+                    Assert.Contains("ExceptionDetailTests.cs", exceptionDetail.StackFrames.First().CodeFile);
                     Assert.True(exceptionDetail.InnerException.IsNotNull());
                 }
             }
@@ -109,8 +107,8 @@ public sealed class ExceptionDetailTests
                 _extensionMethodException = new ExtensionMethodException(_extensionMethodExceptionMessage);
                 _applicationStartupException = new ApplicationStartupException(_extensionMethodExceptionMessage, _extensionMethodException);
 
-                bool includeStackFrames = true;
-                bool filterStackFrames = true;
+                var includeStackFrames = true;
+                var filterStackFrames = true;
 
                 //-- Act
                 var exceptionDetail = _applicationStartupException.GetExceptionDetail(includeStackFrames, filterStackFrames);
@@ -132,8 +130,8 @@ public sealed class ExceptionDetailTests
                 _nullReferenceException = new NullReferenceException(_nullReferenceExceptionMessage);
                 _applicationStartupException = new ApplicationStartupException(_applicationStartupExceptionMessage, _nullReferenceException);
 
-                bool includeStackFrames = false;
-                bool filterStackFrames = true;
+                var includeStackFrames = false;
+                var filterStackFrames = true;
 
                 //-- Act
                 try

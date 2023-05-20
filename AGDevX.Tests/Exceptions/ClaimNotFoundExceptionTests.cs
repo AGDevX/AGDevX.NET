@@ -9,13 +9,23 @@ public sealed class ClaimNotFoundExceptionTests
     public class When_throwing_a_ClaimNotFoundException
     {
         [Fact]
+        public void And_has_correct_default_code_then_assert_true()
+        {
+            //-- Arrange
+            var defaultCode = "CLAIM_NOT_FOUND_EXCEPTION";
+
+            //-- Assert
+            Assert.True(new ClaimNotFoundException().Code.Equals(defaultCode));
+        }
+
+        [Fact]
         public void And_has_correct_code_then_assert_true()
         {
             //-- Arrange
-            var code = "CLAIM_NOT_FOUND_EXCEPTION";
+            var code = "ex";
 
             //-- Assert
-            Assert.True(new ClaimNotFoundException().Code.Equals(code));
+            Assert.True(new ClaimNotFoundException("msg", code).Code.Equals(code));
         }
 
         [Fact]
@@ -39,6 +49,21 @@ public sealed class ClaimNotFoundExceptionTests
             //-- Assert
             Assert.True(new ClaimNotFoundException(message, innerException).Message.Equals(message));
             Assert.True(new ClaimNotFoundException(message, innerException).InnerException == innerException);
+        }
+
+        [Fact]
+        public void And_should_have_inner_exception_then_make_all_properties_are_correct()
+        {
+            //-- Arrange
+            var message = "Test message";
+            var code = "ex";
+            var innerExceptionMessage = "Inner exception message";
+            var innerException = new Exception(innerExceptionMessage);
+
+            //-- Assert
+            Assert.True(new ClaimNotFoundException(message, code, innerException).Message.Equals(message));
+            Assert.True(new ClaimNotFoundException(message, code, innerException).Code.Equals(code));
+            Assert.True(new ClaimNotFoundException(message, code, innerException).InnerException == innerException);
         }
     }
 }

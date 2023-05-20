@@ -17,13 +17,17 @@ public static class AssemblyUtility
     /// Optionally provide a list of assembly prefixes to filter out all assemblies that do not begin with the prefixes
     /// </remarks>
     /// <param name="parent">The base assembly used to retrieve referenced assemblies (optional)</param>
-    /// <param name="assemblyPrefixes">List of prefixes to filter out assemblies whose FullName does not begin with the prefixes (optional)</param>
+    /// <param name="assemblyPrefixes">List of prefixes to filter out assemblies whose FullName does not begin with the prefixes (required)</param>
     /// <returns>A list of assemblies referenced by the base assembly</returns>
-    public static List<Assembly> GetAssemblies(Assembly? parent = default, IEnumerable<string>? assemblyPrefixes = default)
+    public static List<Assembly> GetAssemblies(Assembly? parent, [AllowNull] IEnumerable<string> assemblyPrefixes)
     {
+        if (assemblyPrefixes == null)
+        {
+            throw new ExtensionMethodParameterNullException(nameof(assemblyPrefixes));
+        }
+
         var referencedAssemblies = parent?.GetReferencedAssemblies().Select(a => Assembly.Load(a));
         var currentDomainAssemblies = AppDomain.CurrentDomain.GetAssemblies();
-        assemblyPrefixes ??= Enumerable.Empty<string>();
 
         return (referencedAssemblies ?? currentDomainAssemblies)
             .Where(a => !assemblyPrefixes.Any() || a.FullNameStartsWithPrefixes(assemblyPrefixes))

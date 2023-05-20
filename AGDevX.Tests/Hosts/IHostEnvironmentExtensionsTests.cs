@@ -1,7 +1,4 @@
-﻿using System;
-using AGDevX.Assemblies;
-using AGDevX.Exceptions;
-using System.Reflection;
+﻿using AGDevX.Exceptions;
 using AGDevX.Hosts;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
@@ -12,10 +9,9 @@ public class IHostEnvironmentExtensionsTests
 {
     private static IHostEnvironment _prodHostEnvironment = new HostEnvironment
     {
-        ApplicationName = "AGDevXTests",
+        ApplicationName = "AGDevX",
         EnvironmentName = "Prod",
-        ContentRootPath = "C:\\",
-        ContentRootFileProvider = new PhysicalFileProvider("C:\\")
+        ContentRootPath = ""
     };
 
     public class When_calling_IsOneOf
@@ -79,6 +75,8 @@ public class IHostEnvironmentExtensionsTests
         public required string EnvironmentName { get; set; }
         public required string ApplicationName { get; set; }
         public required string ContentRootPath { get; set; }
-        public required IFileProvider ContentRootFileProvider { get; set; }
+#pragma warning disable CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
+        public IFileProvider? ContentRootFileProvider { get; set; }
+#pragma warning restore CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
     }
 }

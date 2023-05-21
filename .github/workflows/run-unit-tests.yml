@@ -23,10 +23,10 @@ jobs:
           dotnet-version: 7.0.x
 
       - name: Restore dependencies
-        run: dotnet restore {{ env.PROJECT_PATH }}
+        run: dotnet restore ${{ env.PROJECT_PATH }}
 
       - name: Build
-        run: dotnet build {{ env.PROJECT_PATH }} --no-restore --configuration {{ env.CONFIGURATION }}
+        run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration ${{ env.CONFIGURATION }}
 
       - name: Run Unit Tests
         run: dotnet test --no-build --verbosity normal

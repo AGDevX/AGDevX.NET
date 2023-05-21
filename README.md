@@ -55,8 +55,8 @@ Decorator to provide a string value to an Enum since C# does not support Enums w
 
 ## Exceptions
 
-- `CodedException`: Base exception from which to inherit for application-specific exceptions. This inherits from ApplicationException and adds the concept of a "Code" that can be programmatically checked by other applications if this exception is serialized and returned to another application.
-
+- `CodedApplicationException`: Base exception from which to inherit for coded application-specific exceptions. This inherits from ApplicationException and adds the concept of a "Code" that can provide additional context into the origin of the exception.
+- `CodedArgumentNullException` Base exception from which to inherit for coded null argument exceptions. This inherits from ArgumentNullException and adds the concept of a "Code" that can provide additional context into the origin of the exception.
 - `AcquireTokenException`: Exception to throw if an error occurs while acquiring a token from an authorization server
 - `ApplicationStartupException`: Exception to throw during application start up if an error occurs during the application startup process
 - `ClaimNotFoundException`: Exception to throw if a claim is unable to be retrieved from a ClaimsPrincipal

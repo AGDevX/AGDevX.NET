@@ -86,14 +86,6 @@ Information relevant to a developer that has been extracted from an execption an
 
 <br />
 
-## Hosts
-
-### IHostEnvironmentExtensions
-
-- `IsOneOf`: Determines if an IHostEnvironment is configured for any of the provided environments
-
-<br />
-
 ## IEnumerables
 
 ### Dictionary Extensions

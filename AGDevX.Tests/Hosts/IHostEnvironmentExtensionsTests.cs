@@ -1,4 +1,5 @@
-﻿using AGDevX.Exceptions;
+﻿using System;
+using AGDevX.Exceptions;
 using AGDevX.Hosts;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
@@ -7,7 +8,7 @@ using Xunit;
 namespace AGDevX.Tests.Hosts;
 public class IHostEnvironmentExtensionsTests
 {
-    private static IHostEnvironment _prodHostEnvironment = new HostEnvironment
+    private static readonly IHostEnvironment _prodHostEnvironment = new HostEnvironment
     {
         ApplicationName = "AGDevX",
         EnvironmentName = "Prod",
@@ -75,8 +76,6 @@ public class IHostEnvironmentExtensionsTests
         public required string EnvironmentName { get; set; }
         public required string ApplicationName { get; set; }
         public required string ContentRootPath { get; set; }
-#pragma warning disable CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
-        public IFileProvider? ContentRootFileProvider { get; set; }
-#pragma warning restore CS8766 // Nullability of reference types in return type doesn't match implicitly implemented member (possibly because of nullability attributes).
+        public IFileProvider ContentRootFileProvider { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

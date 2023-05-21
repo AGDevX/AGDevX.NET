@@ -73,7 +73,7 @@ public static class StringExtensions
     /// </summary>
     /// <param name="str">String to check (required)</param>
     /// <returns>True if the string is not null and not whitespace. Otherwise, false.</returns>
-    public static bool IsNotNullNorWhiteSpace([NotNullWhen(true)] this string str)
+    public static bool IsNotNullNorWhiteSpace([AllowNull] [NotNullWhen(true)] this string str)
     {
         return !string.IsNullOrWhiteSpace(str);
     }

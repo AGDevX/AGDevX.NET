@@ -1,6 +1,6 @@
-# Build a .NET Core solution and run unit tests
+# Build a .NET Core solution, run unit tests, and create a NuGet package
 
-name: Run Unit Tests
+name: Build, Test, Create NuGet Package
 
 on:
   pull_request:
@@ -15,7 +15,7 @@ env:
   NUGET_API_URL: https://api.nuget.org/v3/index.json
 
 jobs:
-  run_unit_tests:
+  build-test-create-nuget-package:
     name: Run Unit Tests
 
     runs-on: ${{ matrix.os }}
@@ -46,10 +46,8 @@ jobs:
       #  uses: batilla7/get-version-action@v2
 
       - name: Pack
-        if: ${{ success() }}
-        run: dotnet pack ${{ env.SOLUTION_PATH }} --configuration ${{ env.CONFIGURATION }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }} --no-restore --no-build --include-symbols
+        run: dotnet pack ${{ env.SOLUTION_PATH }} --configuration ${{ env.CONFIGURATION }} --include-symbols --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }} --no-restore --no-build
         #run: dotnet pack ${{ env.SOLUTION_PATH }} --configuration ${{ env.CONFIGURATION }} -p:PackageVersion=${{ steps.version.outputs.version-without-v }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }} --no-restore --no-build --include-symbols
 
       #- name: Push to NuGet.org
-      #  if: ${{ success() }}
       #  run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg -s ${{ env.NUGET_API_URL }} -k ${{ secrets.NUGET_API_KEY }}

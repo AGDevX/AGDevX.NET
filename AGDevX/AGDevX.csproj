@@ -19,6 +19,7 @@
 		<IncludeSymbols>True</IncludeSymbols>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<Version />
+		<PackageReleaseNotes>Initial release</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<ItemGroup>

@@ -1,17 +1,27 @@
-# This workflow will build a .NET Core solution and run unit tests
+# Build a .NET Core solution and run unit tests
 
 name: Run Unit Tests
 
 on:
   pull_request:
+  #push:
+  #  tags:
+  #    - 'v*'
 
 env:
   SOLUTION_PATH: 'AGDevX.sln'
   CONFIGURATION: 'Release'
+  PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output
+  NUGET_API_URL: https://api.nuget.org/v3/index.json
 
 jobs:
   run_unit_tests:
-    runs-on: ubuntu-latest
+    name: Run Unit Tests
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
       - name: Check out code
@@ -26,7 +36,20 @@ jobs:
         run: dotnet restore ${{ env.SOLUTION_PATH }}
 
       - name: Build
-        run: dotnet build ${{ env.SOLUTION_PATH }} --no-restore --configuration ${{ env.CONFIGURATION }}
+        run: dotnet build ${{ env.SOLUTION_PATH }} --configuration ${{ env.CONFIGURATION }} --no-restore
 
       - name: Run Unit Tests
         run: dotnet test --no-build --verbosity normal
+
+      #- name: Get version
+      #  id: version
+      #  uses: batilla7/get-version-action@v2
+
+      - name: Pack
+        if: ${{ success() }}
+        run: dotnet pack ${{ env.SOLUTION_PATH }} --configuration ${{ env.CONFIGURATION }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }} --no-restore --no-build --include-symbols
+        #run: dotnet pack ${{ env.SOLUTION_PATH }} --configuration ${{ env.CONFIGURATION }} -p:PackageVersion=${{ steps.version.outputs.version-without-v }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }} --no-restore --no-build --include-symbols
+
+      #- name: Push to NuGet.org
+      #  if: ${{ success() }}
+      #  run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg -s ${{ env.NUGET_API_URL }} -k ${{ secrets.NUGET_API_KEY }}

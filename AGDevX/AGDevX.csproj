@@ -4,7 +4,33 @@
 		<TargetFramework>net7.0</TargetFramework>
 		<ImplicitUsings>disable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Title>AGDevX</Title>
+		<PackageProjectUrl>https://github.com/AGDevX/AGDevX.NET</PackageProjectUrl>
+		<Description>AGDevX .NET is a collection of C# extension methods, utilities, and other helpful, foundational code that can help make developing applications more elegant.</Description>
+		<Copyright>2023</Copyright>
+		<PackageIcon>Icon-NuGet.png</PackageIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/AGDevX/AGDevX.NET</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>extensions;utilities</PackageTags>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<IncludeSymbols>True</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<Version />
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Include="..\Icon-NuGet.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	  <None Include="..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
 
 	<ItemGroup>
 	  <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />

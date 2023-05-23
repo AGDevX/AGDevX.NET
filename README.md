@@ -2,9 +2,6 @@
 
 AGDevX .NET is a collection of C# extension methods, utilities, and other helpful, foundational code that can help make developing applications more elegant.
 
-<br />
-<br />
-
 # Features
 
 The sections below describe AGDevX .NET's capabilities.
@@ -21,23 +18,17 @@ The sections below describe AGDevX .NET's capabilities.
 - `GetAssemblies`: Recursively retrieves all assemblies referenced by the provided parent assembly or the currently executing assembly
 - `AssemblyNameStartsWithAnyPrefix`: Determines if an assembly's FullName begins with any of the provided prefixes
 
-<br />
-
 ## Attributes
 
 ### Attribute Extensions
 
 - `GetDescription`: Retrieves the value of the DescriptionAttribute for an objects of type T
 
-<br />
-
 ## DateTimes
 
 ### DateTime Extensions
 
 - `SpecifyKind`: Specifies the Kind of the DateTime
-
-<br />
 
 ## Enums
 
@@ -50,8 +41,6 @@ The sections below describe AGDevX .NET's capabilities.
 Decorator to provide a string value to an Enum since C# does not support Enums with a string value
 
 - `StringValue` (extension): Retrieves the string value for an Enum decorated with the EnumStringValueAttribute
-
-<br />
 
 ## Exceptions
 
@@ -71,8 +60,6 @@ Information relevant to a developer that has been extracted from an execption an
 
 - `GetExceptionDetail` (Exception extension method): Recursively retrieves structured information about an exception
 
-<br />
-
 ## Guids
 
 ### Guid Extensions
@@ -83,8 +70,6 @@ Information relevant to a developer that has been extracted from an execption an
 - `IsNotNull`: Determines if a Guid is not null
 - `IsNullOrEmpty`: Determines if a Guid is null or empty
 - `IsNotNullNorEmpty`: Determines if a Guid is not null and not empty
-
-<br />
 
 ## IEnumerables
 
@@ -101,16 +86,12 @@ Information relevant to a developer that has been extracted from an execption an
 - `ContainsIgnoreCase`: Determines if a string IEnumerable contains the provided string
 - `AnySafe`: Determines if there are any records in an IEnumerable (will not blow up on null IEnumerables)
 
-<br />
-
 ## Objects
 
 ### Object Extensions
 
 - `IsNull`: Determines if an object is null
 - `IsNotNull`: Determines if an object is not null
-
-<br />
 
 ## Security
 
@@ -121,8 +102,6 @@ Information relevant to a developer that has been extracted from an execption an
 ### ClaimsPrincipal Extensions
 
 Extensions for pulling Claims out of a ClaimsPrincipal
-
-<br />
 
 ## Strings
 
@@ -137,9 +116,6 @@ Extensions for pulling Claims out of a ClaimsPrincipal
 - `IsNotWhiteSpace`: Determines if a string contains at least one character that is not whitespace
 - `IsEmpty`: Determines if a string is empty
 - `IsNotEmpty`: Determines if a string is not empty
-
-<br />
-<br />
 
 # Tech Debt
 
